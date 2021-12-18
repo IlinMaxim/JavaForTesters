@@ -10,7 +10,7 @@ public class MainClass {
 
     System.out.println("Расстояние между точкой с координатами (" + p1.x + ", " + p1.y + ") и точкой с координатами (" + p2.x + ", " + p2.y + ") = " + p1.distance(p2));
   }
-  
+
   public static double distance(Point p1, Point p2) {
     double x = p2.x - p1.x;
     double y = p2.y - p1.y;
