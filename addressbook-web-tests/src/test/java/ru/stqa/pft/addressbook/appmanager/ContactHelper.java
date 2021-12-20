@@ -14,6 +14,10 @@ public class ContactHelper extends HelperBase{
     click((By.linkText("add new")));
   }
 
+  public void initContactModification(){
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
   public void returnToHomePage() {
     click(By.linkText("home page"));
   }
@@ -35,5 +39,18 @@ public class ContactHelper extends HelperBase{
     type(By.name("work"),contactData.getWorkTelephone());
     type(By.name("fax"),contactData.getFax());
     type(By.name("email"),contactData.getFirstEmail());
+  }
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+  public void deleteSelectedContacts(){
+    click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void submitDeletionContacts() {
+    wd.switchTo().alert().accept();
+  }
+  public void submitContactModification() {
+    click(By.name("update"));
   }
 }
