@@ -7,7 +7,12 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreation() {
-    app.getContactHelper().createNewContact(new ContactData("FirstName", "MiddleName", "LastName", "Nickname", "Title", "Company", "Address", "HomeTelephone", "MobileTelephone", "WorkTelephone", "Fax", "FirstEmail", "test1"), true);
+    app.getContactHelper().createNewContact(new ContactData("FirstName", "MiddleName", "LastName", "Nickname", "Title", "Company", "Address", "HomeTelephone", "MobileTelephone", "WorkTelephone", "Fax", "FirstEmail", "test1"));
+  }
+
+  @Test
+  public void testContactCreationWithoutCreatedGroup() {
+    app.getContactHelper().createNewContact(new ContactData("FirstNameGroup", "MiddleName", "LastName", "Nickname", "Title", "Company", "Address", "HomeTelephone", "MobileTelephone", "WorkTelephone", "Fax", "FirstEmail", "notCreatedGroup"));
   }
 
 }
