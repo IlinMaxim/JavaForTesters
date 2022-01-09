@@ -3,31 +3,51 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreation() {
-    List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData("PersonOne", "MiddleName", "LastName", "Nickname", "Title", "Company", "Address", "HomeTelephone", "MobileTelephone", "WorkTelephone", "Fax", "FirstEmail", "test1");
-    app.getContactHelper().createNewContact(contact);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData()
+            .withFirstName("PersonOne")
+            .withMiddleName("MiddleName")
+            .withLastName("LastName")
+            .withNickname("Nickname")
+            .withMobileTelephone("MobileTelephone")
+            .withFirstEmail("FirstEmail")
+            .withGroup("newGroup");
+
+    app.contact().create(contact);
+    Contacts after = app.contact().all();
 
     Assert.assertEquals(after.size(), before.size() + 1);
-    before.add(contact);
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
   }
 
   @Test
   public void testContactCreationWithoutCreatedGroup() {
-    app.getContactHelper().createNewContact(new ContactData("PersonTwo", "MiddleName", "LastName", "Nickname", "Title", "Company", "Address", "HomeTelephone", "MobileTelephone", "WorkTelephone", "Fax", "FirstEmail", "notCreatedGroup"));
-  }
+    Contacts before = app.contact().all();
+    ContactData contactWithoutGroup = new ContactData().withFirstName("PersonTwo")
+            .withMiddleName("MiddleName")
+            .withLastName("LastName")
+            .withNickname("Nickname")
+            .withMobileTelephone("MobileTelephone")
+            .withFirstEmail("FirstEmail")
+            .withGroup("notCreatedGroup");
 
+    app.contact().create(contactWithoutGroup);
+    Contacts after = app.contact().all();
+
+    Assert.assertEquals(after.size(), before.size() + 1);
+    assertThat(after, equalTo(
+            before.withAdded(contactWithoutGroup.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
+
+  }
 }
 
