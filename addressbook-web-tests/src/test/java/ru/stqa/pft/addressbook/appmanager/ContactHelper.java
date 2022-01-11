@@ -7,11 +7,13 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 
 public class ContactHelper extends HelperBase {
+
+  private Contacts contactsCache;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -70,7 +72,21 @@ public class ContactHelper extends HelperBase {
     initContactCreation();
     fillContactForm(contactData, true);
     submitContactCreation();
+    contactsCache = null;
     returnToHomePage();
+  }
+
+  public void modify(ContactData contact) {
+    fillContactForm(contact, false);
+    submitContactModification();
+    contactsCache = null;
+  }
+
+  public void delete(ContactData deletedContact) {
+    selectContact(deletedContact.getLine());
+    deleteSelectedContacts();
+    submitDeletionContacts();
+    contactsCache = null;
   }
 
   public boolean isGroupNamePresent(String groupName) {
@@ -83,12 +99,11 @@ public class ContactHelper extends HelperBase {
   }
 
   public Contacts all() {
-    try {
-      sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    if (contactsCache != null) {
+      return new Contacts(contactsCache);
     }
-    Contacts contacts = new Contacts();
+
+    contactsCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.cssSelector("tr"));
     elements.remove(0);
     int line = 0;
@@ -97,21 +112,10 @@ public class ContactHelper extends HelperBase {
       String lastName = element.findElements(By.cssSelector("td")).get(1).getText();
       String firstName = element.findElements(By.cssSelector("td")).get(2).getText();
 
-      contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withLine(line));
+      contactsCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withLine(line));
       line++;
     }
-    return contacts;
-  }
-
-  public void modify(ContactData contact) {
-   fillContactForm(contact, false);
-   submitContactModification();
-  }
-
-  public void delete(ContactData deletedContact) {
-    selectContact(deletedContact.getLine());
-    deleteSelectedContacts();
-    submitDeletionContacts();
+    return contactsCache;
   }
 }
 
