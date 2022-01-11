@@ -18,7 +18,6 @@ public class ContactCreationTests extends TestBase {
             .withMiddleName("MiddleName")
             .withLastName("LastName")
             .withNickname("Nickname")
-            .withMobileTelephone("MobileTelephone")
             .withFirstEmail("FirstEmail")
             .withGroup("newGroup");
 
@@ -37,7 +36,6 @@ public class ContactCreationTests extends TestBase {
             .withMiddleName("MiddleName")
             .withLastName("LastName")
             .withNickname("Nickname")
-            .withMobileTelephone("MobileTelephone")
             .withFirstEmail("FirstEmail")
             .withGroup("notCreatedGroup");
 
