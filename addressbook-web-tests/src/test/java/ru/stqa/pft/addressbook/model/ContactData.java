@@ -13,6 +13,7 @@ public class ContactData {
   private String group;
   private String homePhone;
   private String mobilePhone;
+  private String secondPhone;
   private String workPhone;
   private String allPhones;
   private String address;
@@ -92,6 +93,15 @@ public class ContactData {
 
   public String getThirdEmail() {
     return thirdEmail;
+  }
+
+  public String getSecondPhone() {
+    return secondPhone;
+  }
+
+  public ContactData withSecondPhone(String secondPhone) {
+    this.secondPhone = secondPhone;
+    return this;
   }
 
   public ContactData withId(int id) {
