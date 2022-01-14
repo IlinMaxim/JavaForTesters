@@ -1,0 +1,17 @@
+[
+  {
+    "name": "TestGroup 0Json",
+    "header": "Header 0",
+    "footer": "Footer 0"
+  },
+  {
+    "name": "TestGroup 1",
+    "header": "Header 1",
+    "footer": "Footer 1"
+  },
+  {
+    "name": "TestGroup 2",
+    "header": "Header 2",
+    "footer": "Footer 2"
+  }
+]
