@@ -42,6 +42,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("nickname"), contactData.getNickname());
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("email"), contactData.getFirstEmail());
+    attach(By.name("photo"), contactData.getPhoto());
 
     if (creation) {
       if (isGroupNamePresent(contactData.getGroup())) {
