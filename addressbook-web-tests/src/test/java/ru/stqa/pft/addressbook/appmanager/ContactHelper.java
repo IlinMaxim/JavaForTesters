@@ -105,6 +105,7 @@ public class ContactHelper extends HelperBase {
     }
 
     contactsCache = new Contacts();
+    wd.findElement(By.id("search_count"));
     List<WebElement> elements = wd.findElements(By.cssSelector("tr"));
     elements.remove(0);
     int line = 0;
