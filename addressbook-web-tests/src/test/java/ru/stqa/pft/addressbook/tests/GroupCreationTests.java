@@ -56,26 +56,28 @@ public class GroupCreationTests extends TestBase {
 
   @Test(dataProvider = "validGroupsFromJson")
   public void testGroupCreation(GroupData group) {
+    Groups before = app.db().groups();
     app.goTo().groupPage();
-    Groups before = app.group().all();
     app.group().create(group);
 
     assertThat(app.group().count(), equalTo(before.size() + 1));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(
             before.withAdded(group.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
   }
 
+
+  // В текущем тесте группа не создается, т.к. не может быть создана группа с символом '
   @Test
   public void testBadGroupCreation() {
-    GroupData group = new GroupData().withName("Test'");
+    GroupData group = new GroupData().withName("GroupThatCanNotBeCreated'");
 
+    Groups before = app.db().groups();
     app.goTo().groupPage();
-    Groups before = app.group().all();
     app.group().create(group);
 
     assertThat(app.group().count(), equalTo(before.size()));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before));
   }
 

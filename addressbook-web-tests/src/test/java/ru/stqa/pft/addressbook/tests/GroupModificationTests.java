@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupModificationTests extends TestBase {
-
+/*
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().groupPage();
@@ -19,7 +19,35 @@ public class GroupModificationTests extends TestBase {
       app.group().create(new GroupData().withName("newGroup"));
     }
   }
+ */
 
+  @BeforeMethod
+  public void ensurePreconditions(){
+    if(app.db().groups().size() == 0){
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("newGroup"));
+    }
+  }
+
+  @Test
+  public void testGroupModification() {
+    Groups before = app.db().groups();
+    GroupData modifiedGroup = before.iterator().next();
+
+    app.goTo().groupPage();
+    GroupData group = new GroupData().withId(modifiedGroup.getId())
+            .withName("newMaximGroup")
+            .withHeader("test1")
+            .withFooter("test1");
+
+    app.group().modify(group);
+
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.db().groups();
+    MatcherAssert.assertThat(after, CoreMatchers.equalTo(before.without(modifiedGroup).withAdded(group)));
+  }
+
+/*
   @Test
   public void testGroupModification() {
     Groups before = app.group().all();
@@ -36,6 +64,5 @@ public class GroupModificationTests extends TestBase {
     Groups after = app.group().all();
     MatcherAssert.assertThat(after, CoreMatchers.equalTo(before.without(modifiedGroup).withAdded(group)));
   }
-
-
+ */
 }
