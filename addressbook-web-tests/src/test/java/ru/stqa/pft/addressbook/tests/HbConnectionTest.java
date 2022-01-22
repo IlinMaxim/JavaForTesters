@@ -32,7 +32,7 @@ public class HbConnectionTest {
     }
   }
 
-  @Test
+  @Test(enabled = false)
   public void printGroupsFromDataBase() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
@@ -44,7 +44,7 @@ public class HbConnectionTest {
     session.close();
   }
 
-  @Test
+  @Test(enabled = false)
   public void printContactsFromDataBase() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();

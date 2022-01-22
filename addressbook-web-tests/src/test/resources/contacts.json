@@ -2,16 +2,33 @@
   {
     "firstName": "FirstNameContact 0",
     "middleName": "MiddleNameContact 0",
-    "lastName": "LastNameContact 0"
+    "lastName": "LastNameContact 0",
+    "nickname": "Nickname 0",
+    "mobilePhone": "MobilePhone 0",
+    "firstEmail": "Email 0"
   },
   {
     "firstName": "FirstNameContact 1",
     "middleName": "MiddleNameContact 1",
-    "lastName": "LastNameContact 1"
+    "lastName": "LastNameContact 1",
+    "nickname": "Nickname 1",
+    "mobilePhone": "MobilePhone 1",
+    "firstEmail": "Email 1"
   },
   {
     "firstName": "FirstNameContact 2",
     "middleName": "MiddleNameContact 2",
-    "lastName": "LastNameContact 2"
+    "lastName": "LastNameContact 2",
+    "nickname": "Nickname 2",
+    "mobilePhone": "MobilePhone 2",
+    "firstEmail": "Email 2"
+  },
+  {
+    "firstName": "FirstNameContact 3",
+    "middleName": "MiddleNameContact 3",
+    "lastName": "LastNameContact 3",
+    "nickname": "Nickname 3",
+    "mobilePhone": "MobilePhone 3",
+    "firstEmail": "Email 3"
   }
 ]

@@ -27,6 +27,10 @@ public class ContactHelper extends HelperBase {
     wd.findElements(By.xpath("//img[@alt='Edit']")).get(contact.getLine()).click();
   }
 
+  public void initContactModificationById(ContactData contact) {
+    wd.findElement(By.cssSelector(String.format("[href='edit.php?id=%s']",contact.getId()))).click();
+  }
+
   public void returnToHomePage() {
     click(By.linkText("home page"));
   }
@@ -42,8 +46,9 @@ public class ContactHelper extends HelperBase {
     type(By.name("nickname"), contactData.getNickname());
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("email"), contactData.getFirstEmail());
-    attach(By.name("photo"), contactData.getPhoto());
-
+    if (contactData.getPhoto() != null) {
+      attach(By.name("photo"), contactData.getPhoto());
+    }
     if (creation) {
       if (isGroupNamePresent(contactData.getGroup())) {
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -55,6 +60,9 @@ public class ContactHelper extends HelperBase {
 
   public void selectContact(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
+  }
+  public void selectContactById(int id) {
+  wd.findElement(By.cssSelector(String.format("[value='%s']", id))).click();
   }
 
   public void deleteSelectedContacts() {
@@ -84,7 +92,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void delete(ContactData deletedContact) {
-    selectContact(deletedContact.getLine());
+    selectContactById(deletedContact.getId());
     deleteSelectedContacts();
     submitDeletionContacts();
     contactsCache = null;
@@ -136,7 +144,7 @@ public class ContactHelper extends HelperBase {
     String homePhone = wd.findElement(By.name("home")).getAttribute("value");
     String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
     String workPhone = wd.findElement(By.name("work")).getAttribute("value");
-    String secondPhone =  wd.findElement(By.name("phone2")).getAttribute("value");
+    String secondPhone = wd.findElement(By.name("phone2")).getAttribute("value");
     String address = wd.findElement(By.name("address")).getAttribute("value");
     String firstEmail = wd.findElement(By.name("email")).getAttribute("value");
     String secondEmail = wd.findElement(By.name("email2")).getAttribute("value");

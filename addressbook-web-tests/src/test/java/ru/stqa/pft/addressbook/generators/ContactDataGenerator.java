@@ -47,8 +47,12 @@ public class ContactDataGenerator {
       contacts.add(new ContactData()
               .withFirstName(String.format("FirstNameContact %s", i))
               .withMiddleName(String.format("MiddleNameContact %s", i))
-              .withLastName(String.format("LastNameContact %s", i)));
+              .withLastName(String.format("LastNameContact %s", i))
+              .withNickname(String.format("Nickname %s", i))
+              .withMobilePhone(String.format("MobilePhone %s", i))
+              .withFirstEmail(String.format("Email %s", i)));
     }
+    System.out.println(contacts);
     return contacts;
   }
 
