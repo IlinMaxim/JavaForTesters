@@ -11,6 +11,15 @@ import java.util.List;
 public class GroupHelper extends HelperBase {
 
   private Groups groupCache = null;
+  private boolean verifyUi;
+
+  public boolean isVerifyUi() {
+    return verifyUi;
+  }
+
+  public void setVerifyUi(String verifyUi) {
+    this.verifyUi = Boolean.parseBoolean(verifyUi);
+  }
 
   public GroupHelper(WebDriver wd) {
     super(wd);

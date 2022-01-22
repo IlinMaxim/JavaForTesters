@@ -7,6 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,9 +38,13 @@ public class ContactCreationTests extends TestBase {
     }
   }
 
+  //Если нет группы, то создать группу
+
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) {
+    Groups groups = app.db().groups();
     Contacts before = app.db().contacts();
+    contact.inGroup(groups.iterator().next());
 
     app.contact().create(contact);
     Contacts after = app.db().contacts();
@@ -51,6 +56,7 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreationWithoutCreatedGroup() {
+
     Contacts before = app.db().contacts();
     ContactData contactWithoutGroup = new ContactData()
             .withFirstName("PersonTwo")
@@ -58,8 +64,8 @@ public class ContactCreationTests extends TestBase {
             .withLastName("LastName")
             .withNickname("Nickname")
             .withMobilePhone("MobilePhone")
-            .withFirstEmail("FirstEmail")
-            .withGroup("notCreatedGroup");
+            .withFirstEmail("FirstEmail");
+         //   .withGroup("notCreatedGroup");
 
     app.contact().create(contactWithoutGroup);
     Contacts after = app.db().contacts();

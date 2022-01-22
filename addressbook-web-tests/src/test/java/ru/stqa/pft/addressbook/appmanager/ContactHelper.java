@@ -28,7 +28,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void initContactModificationById(ContactData contact) {
-    wd.findElement(By.cssSelector(String.format("[href='edit.php?id=%s']",contact.getId()))).click();
+    wd.findElement(By.cssSelector(String.format("[href='edit.php?id=%s']", contact.getId()))).click();
   }
 
   public void returnToHomePage() {
@@ -50,8 +50,12 @@ public class ContactHelper extends HelperBase {
       attach(By.name("photo"), contactData.getPhoto());
     }
     if (creation) {
-      if (isGroupNamePresent(contactData.getGroup())) {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        String groupName = contactData.getGroups().iterator().next().getName();
+        if (isGroupNamePresent(groupName)) {
+          new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(groupName);
+        }
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -61,8 +65,9 @@ public class ContactHelper extends HelperBase {
   public void selectContact(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
+
   public void selectContactById(int id) {
-  wd.findElement(By.cssSelector(String.format("[value='%s']", id))).click();
+    wd.findElement(By.cssSelector(String.format("[value='%s']", id))).click();
   }
 
   public void deleteSelectedContacts() {

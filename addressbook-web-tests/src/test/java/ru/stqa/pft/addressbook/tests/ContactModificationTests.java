@@ -17,8 +17,7 @@ public class ContactModificationTests extends TestBase {
       app.contact().create(new ContactData()
               .withFirstName("FirstName")
               .withMiddleName("MiddleName")
-              .withLastName("LastName")
-              .withGroup("test1"));
+              .withLastName("LastName"));
   }
 
   @Test
@@ -42,7 +41,5 @@ public class ContactModificationTests extends TestBase {
 
     Assert.assertEquals(before.size(), after.size());
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
-
-
   }
 }
