@@ -43,4 +43,24 @@ public class DbHelper {
 
     return new Contacts(result);
   }
+
+  public int getLastContactId() {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<ContactData> result = session.createQuery("from ContactData where deprecated = '0000-00-00'").list();
+    int lastContactId = 0;
+    for (ContactData contact : result) {
+      int currentContactId = contact.getId();
+      if (lastContactId < currentContactId)
+        lastContactId = currentContactId;
+    }
+    return lastContactId;
+  }
+
+  public ContactData getContactById(ContactData contact) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    ContactData result = (ContactData) session.createQuery(String.format("from ContactData where id = '%s'",contact.getId())).uniqueResult();
+    return result;
+  }
 }

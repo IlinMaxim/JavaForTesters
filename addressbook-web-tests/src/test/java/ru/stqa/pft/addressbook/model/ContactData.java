@@ -80,10 +80,6 @@ public class ContactData {
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
   private Set<GroupData> groups = new HashSet<GroupData>();
 
-  public ContactData() {
-
-  }
-
   public File getPhoto() {
     if (photo.isEmpty()) {
       return null;
@@ -245,8 +241,12 @@ public class ContactData {
     return this;
   }
 
-  public ContactData inGroup(GroupData group) {
+  public ContactData withGroup(GroupData group) {
     groups.add(group);
+    return this;
+  }
+  public ContactData withoutGroup(GroupData group) {
+    groups.remove(group);
     return this;
   }
 
@@ -255,12 +255,12 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickname, that.nickname) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(firstEmail, that.firstEmail);
+    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickname, that.nickname) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(firstEmail, that.firstEmail) && Objects.equals(groups, that.groups);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstName, middleName, lastName, nickname, mobilePhone, firstEmail);
+    return Objects.hash(id, firstName, middleName, lastName, nickname, mobilePhone, firstEmail, groups);
   }
 
   @Override
@@ -273,6 +273,7 @@ public class ContactData {
             ", nickname='" + nickname + '\'' +
             ", mobilePhone='" + mobilePhone + '\'' +
             ", firstEmail='" + firstEmail + '\'' +
+            ", groups=" + groups +
             '}';
   }
 }

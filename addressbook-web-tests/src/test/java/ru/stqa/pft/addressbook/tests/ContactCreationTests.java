@@ -38,13 +38,11 @@ public class ContactCreationTests extends TestBase {
     }
   }
 
-  //Если нет группы, то создать группу
-
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) {
     Groups groups = app.db().groups();
     Contacts before = app.db().contacts();
-    contact.inGroup(groups.iterator().next());
+    contact.withGroup(groups.iterator().next());
 
     app.contact().create(contact);
     Contacts after = app.db().contacts();
