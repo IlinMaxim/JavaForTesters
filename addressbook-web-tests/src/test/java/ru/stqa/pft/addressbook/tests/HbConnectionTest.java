@@ -32,18 +32,6 @@ public class HbConnectionTest {
     }
   }
 
-  @Test(enabled = false)
-  public void printGroupsFromDataBase() {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    List<GroupData> result = session.createQuery("from GroupData").list();
-    for (GroupData group : result) {
-      System.out.println(group);
-    }
-    session.getTransaction().commit();
-    session.close();
-  }
-
   @Test//(enabled = false)
   public void printContactsFromDataBase() {
     Session session = sessionFactory.openSession();
@@ -56,6 +44,18 @@ public class HbConnectionTest {
       System.out.println(contact);
       System.out.println(contact.getGroups());
     }
+  }
+
+  @Test(enabled = false)
+  public void printGroupsFromDataBase() {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<GroupData> result = session.createQuery("from GroupData").list();
+    for (GroupData group : result) {
+      System.out.println(group);
+    }
+    session.getTransaction().commit();
+    session.close();
   }
 
 }
