@@ -20,6 +20,9 @@ public class ApplicationManager {
   private RegistrationHelper registrationHelper;
   private FtpHelper ftp;
   private MailHelper mailHelper;
+  private JamesHelper jamesHelper;
+  private NavigationHelper goTo;
+  private DbHelper db;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -59,12 +62,32 @@ public class ApplicationManager {
     }
     return mailHelper;
   }
+  public DbHelper db() {
+    if (db == null) {
+      db = new DbHelper();
+    }
+    return db;
+  }
+
+  public NavigationHelper goTo() {
+    if (goTo == null) {
+      goTo = new NavigationHelper(this);
+    }
+    return goTo;
+  }
 
   public FtpHelper ftp() {
     if (ftp == null) {
       ftp = new FtpHelper(this);
     }
     return ftp;
+  }
+
+  public JamesHelper james() {
+    if (jamesHelper == null) {
+      jamesHelper = new JamesHelper(this);
+    }
+    return jamesHelper;
   }
 
   public WebDriver getDriver() {
@@ -76,9 +99,12 @@ public class ApplicationManager {
       } else if (browser.equals(BrowserType.IE)) {
         wd = new InternetExplorerDriver();
       }
+      wd.manage().window().maximize();
       wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
       wd.get(properties.getProperty("web.baseUrl"));
     }
     return wd;
   }
+
+
 }

@@ -63,6 +63,6 @@ public class TestBase {
 
       assertThat(uiGroups, equalTo(dbGroupsWithoutParameters));
     }
-
   }
+
 }
