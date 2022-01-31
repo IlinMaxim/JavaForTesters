@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+ //   implementation('ch.qos.logback:logback-classic:1.1.5')
+    implementation("org.apache.httpcomponents:fluent-hc:4.5.1")
+    implementation("org.apache.httpcomponents:httpclient:4.5.1")
+    implementation('com.google.code.gson:gson:2.6.1')
+    implementation("org.testng:testng:7.4.0")
+    implementation("com.jayway.restassured:rest-assured:2.9.0")
+}
+
+test {
+    useTestNG()
+}
