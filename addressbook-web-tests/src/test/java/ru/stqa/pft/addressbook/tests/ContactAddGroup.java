@@ -26,7 +26,6 @@ public class ContactAddGroup extends TestBase {
             .withMobilePhone("MobilePhone")
             .withFirstEmail("Email");
 
-    // Проверяем существование групп
     if (groups.size() == 0) {
       app.goTo().groupPage();
       GroupData newGroup = new GroupData()
@@ -38,7 +37,6 @@ public class ContactAddGroup extends TestBase {
       groups = app.db().groups();
     }
 
-    // Проверяем существование контактов
     if (contacts.size() == 0) {
       app.contact().create(contactForPrecondition);
       contacts = app.db().contacts();
@@ -52,7 +50,6 @@ public class ContactAddGroup extends TestBase {
       }
     }
 
-    // Ищем группу в которую можно добавить контакт
     groupToAdd = getGroupForAdding(contact, groups);
   }
 

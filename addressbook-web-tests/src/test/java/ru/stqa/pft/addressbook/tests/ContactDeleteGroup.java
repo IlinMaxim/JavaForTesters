@@ -44,7 +44,6 @@ public class ContactDeleteGroup extends TestBase {
     }
 
 
-    // Проверяем существование групп
     if (groups.size() == 0) {
       app.goTo().groupPage();
       app.group().create(groupForPrecondition);
@@ -55,7 +54,6 @@ public class ContactDeleteGroup extends TestBase {
       contacts = app.db().contacts();
     }
 
-    // Проверяем существование контактов
     if (contacts.size() == 0) {
       app.contact().create(contactForPrecondition.withGroup(groups.iterator().next()));
       contacts = app.db().contacts();
@@ -65,7 +63,6 @@ public class ContactDeleteGroup extends TestBase {
     groups = app.db().groups();
 
 
-    // Ищем группу в которую можно удалить из контакта
     groupForDelete = getGroupForDeleting(contact, groups);
   }
 
