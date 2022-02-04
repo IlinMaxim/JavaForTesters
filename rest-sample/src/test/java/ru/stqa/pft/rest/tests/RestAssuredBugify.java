@@ -8,7 +8,6 @@ import ru.stqa.pft.rest.model.Issue;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class RestAssuredBugify extends TestBase {
   @BeforeClass
@@ -18,8 +17,7 @@ public class RestAssuredBugify extends TestBase {
 
   @Test
   public void createIssueTest() {
-    Issue createIssueBug = new Issue().withId(1).withDescription("Bug issue creating");
-    skipIfNotFixed(createIssueBug.getId());
+    skipIfNotFixed(1);
 
     Set<Issue> oldIssues = getIssues();
     Issue newIssue = new Issue().withDescription("MaximIlinIssue").withSubject("JavaForTesters");
@@ -27,12 +25,6 @@ public class RestAssuredBugify extends TestBase {
     Set<Issue> newIssues = getIssues();
     oldIssues.add(newIssue.withId(issueId));
     assertEquals(oldIssues, newIssues);
-  }
-
-  @Test
-  public void getIssueStatus() {
-    int openIssueId = 1777;
-    assertTrue(isIssueOpen(openIssueId));
   }
 
 }

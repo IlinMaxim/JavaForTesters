@@ -10,8 +10,6 @@ import ru.stqa.pft.rest.model.Issue;
 
 import java.util.Set;
 
-import static org.testng.Assert.assertTrue;
-
 public class TestBase {
   String baseUrl = "https://bugify.stqa.ru/api/";
 
@@ -34,7 +32,6 @@ public class TestBase {
   }
 
   public boolean isIssueOpen(int issueId) {
-    boolean isIssueOpen = false;
     String jsonString = RestAssured.get(String.format(baseUrl + "issues/%s.json", issueId)).asString();
 
     JsonElement parsed = new JsonParser().parse(jsonString);
@@ -42,12 +39,13 @@ public class TestBase {
     Set<Issue> issues = new Gson().fromJson(jsonIssues, new TypeToken<Set<Issue>>() {
     }.getType());
 
-    assertTrue(issues.size() == 1);
+    Issue selectedIssue = issues.iterator().next();
 
-    if (issues.iterator().next().getStateName().equals("Open")) {
-      isIssueOpen = true;
+    if(selectedIssue.getStateName().equals("Resolved") || selectedIssue.getStateName().equals("Closed")) {
+      return false;
+    } else {
+      return true;
     }
-    return isIssueOpen;
   }
 
   public void skipIfNotFixed(int issueId) {
