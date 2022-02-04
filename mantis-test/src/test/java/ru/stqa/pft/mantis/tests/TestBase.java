@@ -11,7 +11,6 @@ import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
@@ -32,19 +31,17 @@ public class TestBase {
     app.stop();
   }
 
-  public String getIssueStatus(int id) throws MalformedURLException, ServiceException, RemoteException {
-    String adminLogin = app.getProperty("web.adminLogin");
-    String adminPassword = app.getProperty("web.adminPassword");
-
-    MantisConnectPortType mc = app.soap().getMantisConnect();
-    IssueData issue = mc.mc_issue_get(adminLogin, adminPassword, BigInteger.valueOf(id));
-    return issue.getStatus().getName();
-  }
-
-  public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {
-    if (getIssueStatus(issueId).equals("open")) {
+  public void skipIfNotFixed(int issueId) throws IOException, ServiceException {
+    if (isIssueOpen(issueId)) {
       throw new SkipException("Ignored because of issue " + issueId);
     }
   }
 
+  public boolean isIssueOpen(int issueId) throws MalformedURLException, RemoteException, ServiceException {
+    if(app.soap().getIssueStatus(issueId).equals("resolved") || app.soap().getIssueStatus(issueId).equals("closed")) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
